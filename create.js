@@ -3,67 +3,33 @@ const _ = require("lodash");
 const { cdate } = require("cdate");
 const { exit } = require("node:process");
 
-const env = {
-  NOTION_KEY: process.env.NOTION_KEY,
-  NOTION_DATABASE_ID: process.env.NOTION_DATABASE_ID,
-};
-
-if (!env.NOTION_KEY || !env.NOTION_DATABASE_ID) {
+if (!process.env.NOTION_KEY || !process.env.NOTION_DATABASE_ID) {
   console.log(`環境変数が取れてません`);
   exit(1);
 }
 
-const notion = new Client({ auth: env.NOTION_KEY });
-const databaseId = env.NOTION_DATABASE_ID;
+const notion = new Client({ auth: process.env.NOTION_KEY });
+const databaseId = process.env.NOTION_DATABASE_ID;
 
 /**
  * Creates new pages in Notion.
  *
  * https://developers.notion.com/reference/post-page
  *
- * @param {Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>} pagesToCreate
  */
-async function createPages(pagesToCreate) {
-  // const pagesToCreateChunks = _.chunk(pagesToCreate, OPERATION_BATCH_SIZE);
-  // for (const pagesToCreateBatch of pagesToCreateChunks) {
-  //   await Promise.all(
-  //     pagesToCreateBatch.map((issue) =>
-  //       notion.pages.create({
-  //         parent: { database_id: databaseId },
-  //         properties: getPropertiesFromDiary({
-  //           title: `title`,
-  //           number: `number`,
-  //           state: `state`,
-  //           comment_count: `comment_count`,
-  //           url: `url`,
-  //         }),
-  //       })
-  //     )
-  //   );
-  //   console.log(`Completed batch size: ${pagesToCreateBatch.length}`);
-  // }
+async function createPages() {
   return notion.pages.create({
     parent: { database_id: databaseId },
-    properties: getPropertiesFromDiary({
-      title: `title`,
-      number: `number`,
-      state: `state`,
-      comment_count: `comment_count`,
-      url: `url`,
-    }),
+    properties: getPropertiesFromDiary(),
     children: getContent(),
   });
-  // console.log(`Completed batch size: ${pagesToCreateBatch.length}`);
 }
 
 /**
  * Returns the GitHub issue to conform to this database's schema properties.
  *
- * @param {{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }} issue
  */
-function getPropertiesFromDiary(issue) {
-  const { title, number, state, comment_count, url } = issue;
-
+function getPropertiesFromDiary() {
   const date = new Date();
   const now = cdate();
 
@@ -76,9 +42,6 @@ function getPropertiesFromDiary(issue) {
         start: date.toISOString(),
       },
     },
-    // body: {
-    //   title: [{ type: "text", text: { content: title } }],
-    // },
   };
 }
 
