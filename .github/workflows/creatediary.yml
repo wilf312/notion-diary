@@ -45,3 +45,6 @@ jobs:
       - name: notionページの作成
         run: |
           npm run create
+        env:
+          NOTION_KEY: ${{ secrets.NOTION_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
