@@ -1,0 +1,18 @@
+{
+  "name": "notion-diary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "create": "node create.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@notionhq/client": "^2.2.3",
+    "cdate": "^0.0.4",
+    "lodash": "^4.17.21"
+  }
+}
