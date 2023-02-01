@@ -15,6 +15,19 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      deployment_target:
+        description: "Deployment target"
+        required: true
+        default: "action"
+        type: choice
+        options:
+          - action
+          - staging
+          - production
+env:
+  NOTION_KEY: ${{ secrets.NOTION_KEY }}
+  NOTION_DATABASE_ID: ${{ vars.NOTION_DATABASE_ID }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -26,6 +39,8 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
+
+    environment: ${{ inputs.deployment_target || 'action' }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -45,6 +60,3 @@ jobs:
       - name: notionページの作成
         run: |
           npm run create
-        env:
-          NOTION_KEY: ${{ secrets.NOTION_KEY }}
-          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}

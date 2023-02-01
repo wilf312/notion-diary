@@ -1,11 +1,18 @@
 const { Client } = require("@notionhq/client");
 const _ = require("lodash");
 const { cdate } = require("cdate");
+const { exit } = require("node:process");
 
 const env = {
   NOTION_KEY: process.env.NOTION_KEY,
   NOTION_DATABASE_ID: process.env.NOTION_DATABASE_ID,
 };
+
+if (!env.NOTION_KEY || !env.NOTION_DATABASE_ID) {
+  console.log(env);
+  console.log(`環境変数が取れてません`);
+  exit(1);
+}
 
 const notion = new Client({ auth: env.NOTION_KEY });
 const databaseId = env.NOTION_DATABASE_ID;
