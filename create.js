@@ -2,6 +2,7 @@ const { Client } = require("@notionhq/client");
 const _ = require("lodash");
 const { cdate } = require("cdate");
 const { exit } = require("node:process");
+const text = require("./text");
 
 if (!process.env.NOTION_KEY || !process.env.NOTION_DATABASE_ID) {
   console.log(`環境変数が取れてません`);
@@ -53,128 +54,24 @@ function getPropertiesFromDiary() {
 function getContent() {
   return [
     // やりたいこと
-    {
-      type: "heading_1",
-      heading_1: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: "やりたいこと",
-            },
-          },
-        ],
-      },
-    },
-
-    {
-      type: "to_do",
-      to_do: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: "",
-              link: null,
-            },
-          },
-        ],
-        checked: false,
-        color: "default",
-      },
-    },
-
+    text.h1("やりたいこと"),
+    text.todo(),
     // /やりたいこと
 
     // Done
-    {
-      type: "heading_1",
-      heading_1: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: "Done",
-            },
-          },
-        ],
-      },
-    },
-    // /Done
+    text.h1("Done"),
 
     // ChatGPT1日1問
-    {
-      type: "heading_2",
-      heading_2: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: "ChatGPT1日1問",
-            },
-          },
-        ],
-      },
-    },
+    text.h2("ChatGPT1日1問"),
 
     // Happenings
-    {
-      type: "heading_2",
-      heading_2: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: "Happenings",
-            },
-          },
-        ],
-      },
-    },
-    {
-      type: "bulleted_list_item",
-      bulleted_list_item: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: "",
-              link: null,
-            },
-          },
-        ],
-      },
-    },
+    text.h2("Happenings"),
+    text.list(),
     // Happenings
 
     // 感謝
-    {
-      type: "heading_2",
-      heading_2: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: "感謝",
-            },
-          },
-        ],
-      },
-    },
-    {
-      type: "bulleted_list_item",
-      bulleted_list_item: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: "",
-              link: null,
-            },
-          },
-        ],
-      },
-    },
+    text.h2("感謝"),
+    text.list(),
     // /感謝
   ];
 }
