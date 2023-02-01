@@ -9,7 +9,6 @@ const env = {
 };
 
 if (!env.NOTION_KEY || !env.NOTION_DATABASE_ID) {
-  console.log(env);
   console.log(`環境変数が取れてません`);
   exit(1);
 }
