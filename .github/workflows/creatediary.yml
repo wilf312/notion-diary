@@ -38,6 +38,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: node setup
+        run: |
+          npm i
+
       - name: notionページの作成
         run: |
           npm run create
