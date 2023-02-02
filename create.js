@@ -31,16 +31,16 @@ async function createPages() {
  *
  */
 function getPropertiesFromDiary() {
-  const date = new Date();
-  const now = cdate();
+  const GMT = new Date();
+  const JST = cdate().tz("Asia/Tokyo");  
 
   return {
     Name: {
-      title: [{ type: "text", text: { content: now.format(`YYYY/MM/DD`) } }],
+      title: [{ type: "text", text: { content: JST.format(`YYYY/MM/DD`) } }],
     },
     Created: {
       date: {
-        start: date.toISOString(),
+        start: GMT.toISOString(),
       },
     },
   };
