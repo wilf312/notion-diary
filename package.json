@@ -13,6 +13,7 @@
   "dependencies": {
     "@notionhq/client": "^2.2.3",
     "cdate": "^0.0.4",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "markdown-to-notion": "^0.0.1"
   }
 }

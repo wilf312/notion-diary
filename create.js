@@ -3,6 +3,7 @@ const _ = require("lodash");
 const { cdate } = require("cdate");
 const { exit } = require("node:process");
 const text = require("./text");
+const { runNotion } = require("markdown-to-notion");
 
 if (!process.env.NOTION_KEY || !process.env.NOTION_DATABASE_ID) {
   console.log(`環境変数が取れてません`);
@@ -32,7 +33,7 @@ async function createPages() {
  */
 function getPropertiesFromDiary() {
   const GMT = new Date();
-  const JST = cdate().tz("Asia/Tokyo");  
+  const JST = cdate().tz("Asia/Tokyo");
 
   return {
     Name: {
@@ -53,26 +54,16 @@ function getPropertiesFromDiary() {
  */
 function getContent() {
   return [
-    // やりたいこと
-    text.h1("やりたいこと"),
-    text.todo(),
-    // /やりたいこと
-
-    // Done
-    text.h1("Done"),
-
-    // ChatGPT1日1問
-    text.h2("ChatGPT1日1問"),
-
-    // Happenings
-    text.h2("Happenings"),
-    text.list(),
-    // Happenings
-
-    // 感謝
-    text.h2("感謝"),
-    text.list(),
-    // /感謝
+    ...runNotion(`
+# やりたいこと
+* [ ] 
+# Done
+## ChatGPT1日1問
+## Happenings
+* 
+## 感謝
+* 
+`),
   ];
 }
 
