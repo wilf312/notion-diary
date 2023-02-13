@@ -2,7 +2,6 @@ const { Client } = require("@notionhq/client");
 const _ = require("lodash");
 const { cdate } = require("cdate");
 const { exit } = require("node:process");
-const text = require("./text");
 const { runNotion } = require("markdown-to-notion");
 
 if (!process.env.NOTION_KEY || !process.env.NOTION_DATABASE_ID) {
@@ -56,13 +55,13 @@ function getContent() {
   return [
     ...runNotion(`
 # やりたいこと
-* [ ] 
+* [ ]
 # Done
 ## ChatGPT1日1問
 ## Happenings
-* 
+*
 ## 感謝
-* 
+*
 `),
   ];
 }
