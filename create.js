@@ -2,7 +2,7 @@ const { Client } = require("@notionhq/client");
 const _ = require("lodash");
 const { cdate } = require("cdate");
 const { exit } = require("node:process");
-const { runNotion } = require("markdown-to-notion");
+const { lexer } = require("markdown-to-notion");
 
 if (!process.env.NOTION_KEY || !process.env.NOTION_DATABASE_ID) {
   console.log(`環境変数が取れてません`);
@@ -53,7 +53,7 @@ function getPropertiesFromDiary() {
  */
 function getContent() {
   return [
-    ...runNotion(`
+    ...lexer(`
 # やりたいこと
 * [ ]
 # Done
