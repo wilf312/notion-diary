@@ -1,6 +1,7 @@
 const { Client } = require("@notionhq/client");
 const _ = require("lodash");
 const { cdate } = require("cdate");
+const { readFileSync } = require("node:fs");
 const { exit } = require("node:process");
 const { lexer } = require("markdown-to-notion");
 
@@ -52,18 +53,10 @@ function getPropertiesFromDiary() {
  * @param {{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }} issue
  */
 function getContent() {
-  return [
-    ...lexer(`
-# やりたいこと
-* [ ]
-# Done
-## ChatGPT1日1問
-## Happenings
-*
-## 感謝
-*
-`),
-  ];
+  const markdownText = readFileSync(`./diary.md`, {
+    encoding: `UTF-8`,
+  });
+  return [...lexer(markdownText)];
 }
 
 const main = async () => {
