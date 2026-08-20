@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@notionhq/client": "^2.2.3",
+    "@notionhq/client": "^5.0.0",
     "cdate": "^0.0.7",
     "lodash": "^4.17.21",
     "markdown-to-notion": "0.1.1"
